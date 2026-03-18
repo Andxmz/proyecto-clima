@@ -1,12 +1,12 @@
 import requests
 import os
-from flask import Flask, render_template, request 
+from flask import Flask, render_template, request, redirect
 from datetime import datetime, timedelta
 app = Flask(__name__)
 
 @app.route("/")
 def inicio():
-    return "Hola mundo"
+    return redirect("/clima")
 
 @app.route("/clima")
 def tit():
