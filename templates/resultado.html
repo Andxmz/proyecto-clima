@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>resultado</title>
+ <style>
+    body {
+    background-color: rgb(71, 141, 171);  /* color de fondo */
+    font-family: 'Poppins';            /* tipo de letra */
+    text-align: center;            /* centrar texto */
+}
+
+h1 {
+    color: white;                  /* color del texto */
+    font-size: 50px;               /* tamaño del texto */
+}
+
+p {
+    font-size: 30px;               /* tamaño del párrafo */
+    color: darkblue;               /* color del párrafo */
+}
+
+.tarjeta {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    margin: auto;
+}
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(154, 165, 207);
+    color: darkblue;
+    font-size: 27px;
+    cursor: pointer;
+}
+
+ </style>
+ </head>
+ <body>
+     <h1>Resultado del clima</h1>
+     <div class="tarjeta">
+     <p>Ciudad: {{ ciudad }}</p>
+     <p>Temperatura: {{ temperatura }} °C</p>
+     <p>Clima: {{ clima }}</p>
+     <p>Humedad: {{ humedad }} %</p>
+<p>Probabilidad de lluvia: {{ probabilidad }} %</p>
+<p>{{ mensaje_lluvia }}</p>
+<a href="/clima">
+    <button>Volver a buscar</button>
+</a>
+      </div>
+ </body>
+
+
+
+</html>

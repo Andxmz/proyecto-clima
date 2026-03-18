@@ -1,0 +1,60 @@
+import requests
+from flask import Flask, render_template, request 
+from datetime import datetime, timedelta
+app = Flask(__name__)
+
+@app.route("/")
+def inicio():
+    return "Hola mundo"
+
+@app.route("/clima")
+def tit():
+    return render_template("clima.html")
+
+@app.route("/resultado", methods=["POST"])
+def resultado():
+    ciudad = request.form["ciudad"]
+    api_key = "d42be6595ee4cd4f7c7b3a37020e919b"
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={api_key}&units=metric&lang=es"
+    respuesta = requests.get(url)
+    datos = respuesta.json()
+    url_forecast = f"https://api.openweathermap.org/data/2.5/forecast?q={ciudad}&appid={api_key}&units=metric&lang=es"
+    datos_forecast = requests.get(url_forecast).json() 
+    probabilidad = datos_forecast['list'][0]['pop'] * 100
+
+    mañana = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+
+    probabilidades_mañana = []
+
+    for bloque in datos_forecast['list']:
+     if bloque['dt_txt'].startswith(mañana):
+        probabilidades_mañana.append(bloque['pop'] * 100)
+     prob_mañana = max(probabilidades_mañana)
+
+    
+
+    if probabilidad == 0:
+         mensaje_lluvia = "No se esperan lluvias ☀️"
+    elif probabilidad <= 30:
+         mensaje_lluvia = "Poca probabilidad de lluvia 🌤️"
+    elif probabilidad <= 60:
+         mensaje_lluvia = "Probabilidad moderada de lluvia 🌦️"
+    else:
+         mensaje_lluvia = "Alta probabilidad de lluvia 🌧️"
+ 
+    return render_template("resultado.html",
+    ciudad=datos['name'],
+    temperatura=datos['main']['temp'],
+    clima=datos['weather'][0]['description'],
+    humedad=datos['main']['humidity'],
+    probabilidad=probabilidad,
+    mensaje_lluvia=mensaje_lluvia,
+    prob_mañana=prob_mañana
+)
+
+@app.route("/about")
+def sobre():
+    return render_template("about.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
