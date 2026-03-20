@@ -30,7 +30,11 @@ def resultado():
     for bloque in datos_forecast['list']:
      if bloque['dt_txt'].startswith(manana):
         probabilidades_manana.append(bloque['pop'] * 100)
-     prob_manana = max(probabilidades_manana)
+     if probabilidades_manana:
+      prob_manana = max(probabilidades_manana)
+     else:
+      prob_manana = 0
+
 
     
 
