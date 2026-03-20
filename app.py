@@ -23,14 +23,14 @@ def resultado():
     datos_forecast = requests.get(url_forecast).json() 
     probabilidad = datos_forecast['list'][0]['pop'] * 100
 
-    mañana = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+    manana = (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
 
-    probabilidades_mañana = []
+    probabilidades_manana = []
 
     for bloque in datos_forecast['list']:
-     if bloque['dt_txt'].startswith(mañana):
-        probabilidades_mañana.append(bloque['pop'] * 100)
-     prob_mañana = max(probabilidades_mañana)
+     if bloque['dt_txt'].startswith(manana):
+        probabilidades_manana.append(bloque['pop'] * 100)
+     prob_manana = max(probabilidades_manana)
 
     
 
@@ -50,7 +50,7 @@ def resultado():
     humedad=datos['main']['humidity'],
     probabilidad=probabilidad,
     mensaje_lluvia=mensaje_lluvia,
-    prob_mañana=prob_mañana
+    prob_manana=prob_manana
 )
 
 @app.route("/about")
